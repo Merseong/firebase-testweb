@@ -1,19 +1,19 @@
 /*
  * 클릭하면 인식하고 숫자를 올려주는 코드
  */
-var SpaceClicker = SpaceClicker || {};
+var EnterClicker = EnterClicker || {};
 
-SpaceClicker.count = 0;
-SpaceClicker.countMessage = null;
-SpaceClicker.countToMessage = function()
+EnterClicker.count = 0;
+EnterClicker.countMessage = null;
+EnterClicker.countToMessage = function()
 {
-    if (SpaceClicker.countMessage != null) SpaceClicker.countMessage.innerHTML = SpaceClicker.count.toString() + '번';
+    if (EnterClicker.countMessage != null) EnterClicker.countMessage.innerHTML = EnterClicker.count.toString() + '번';
 }
 
 document.getElementById('reset').onclick = function()
 {
-    SpaceClicker.count = 0;
-    SpaceClicker.countToMessage();
+    EnterClicker.count = 0;
+    EnterClicker.countToMessage();
 }
 
 document.body.onkeyup = function()
@@ -22,7 +22,7 @@ document.body.onkeyup = function()
     var keyCode = event.keyCode;
     if (keyCode == 13)
     {
-        SpaceClicker.count++;
-        SpaceClicker.countToMessage();
+        EnterClicker.count++;
+        EnterClicker.countToMessage();
     }
 };

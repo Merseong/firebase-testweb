@@ -19,6 +19,7 @@
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      ul {list-style-type: none; padding-left: 0px; }
       #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
       #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
       #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
@@ -26,21 +27,51 @@
       #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
       #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
       #info { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      #dvAuth {background: white; margin: -80px 20px; float: left; padding: 10px; }
+      #dvLogOut {background: white; margin: -80px 20px; float: left; padding: 10px; }
       @media (max-width: 600px) {
         body, #message { margin-top: 0; background: white; box-shadow: none; }
         body { border-top: 16px solid #ffa100; }
       }
     </style>
   </head>
+  <!-- TODO: 엔터키를 누르면 숫자가 늘어나고, 그 숫자가 계정에 귀속되는 페이지 -->
   <body>
-    <!-- TODO: 엔터키를 누르면 숫자가 늘어나고, 그 숫자가 계정에 귀속되는 페이지 -->
+    <!-- login buttons -->
+    <div id="dvAuth">
+      <h3>- 로그인</h3>
+      <div id="dvSocial">
+        <ul>
+          <li id="liGoogleBtn">구글 계정으로 로그인</li>
+        </ul>
+      </div>
+      <em>or</em>
+      <div id="dvEmail">
+        <ul>
+          <li><input type="text" id="userName" name="userName" class="input-text" placeholder="닉네임(가입할때만 쓰면 됨)"></li>
+          <li><input type="email" id="userEmail" name="userName" class="input-text" placeholder="이메일 아이디"></li>
+          <li><input type="password" id="password" name="password" class="input-text" maxlength="17" placeholder="비밀번호"></li>
+        </ul>
+        <ul>
+          <li id="liEmailBtn">이메일로 로그인</li>
+          <li id="liEmailJoin">이메일로 가입</li>
+        </ul>
+      </div>
+    </div>
+    <div id="dvLogOut" style="display: none">
+      <ul>
+        <li id="liLogOut">로그아웃</li>
+      </ul>
+    </div>
+
+    <!-- main screen -->
     <div id="message">
-      <h2 id="userName">환영합니다.</h2>
+      <h2 id="welcomeUser">환영합니다.</h2>
       <h1>지금까지 당신이 누른 Enter의 수</h1>
       <p id="countMessage">&hellip;</p>
       <a id="reset">RESET</a>
     </div>
-    <p id="info">Enter를 떼야 집계됩니다.</p>
+    <p id="info">Enter를 떼야 집계됩니다.<br/>로그인하지 않으면 저장되지 않습니다.</p>
 
     <script src="js/main.js"></script>
   </body>
