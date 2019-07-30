@@ -18,7 +18,7 @@ document.getElementById('reset').onclick = function()
 
 document.body.onkeyup = function()
 {
-    console.log('pressed something');
+    //console.log('pressed something');
     var keyCode = event.keyCode;
     if (keyCode == 13)
     {

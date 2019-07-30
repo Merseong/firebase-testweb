@@ -40,7 +40,7 @@ FirebaseEnter.prototype.onAuthChange = function(user)
 {
 	if (user)
 	{
-		console.log('user로그인: ', JSON.stringify(user));
+		console.log('user로그인');
 		this.setLogin();
 	}
 	else
