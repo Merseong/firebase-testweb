@@ -52,8 +52,37 @@ FirebaseEnter.prototype.onAuthChange = function(user)
 
 FirebaseEnter.prototype.setLogin = function()
 {
+	EnterClicker.isEnable = false;
+	EnterClicker.countToMessage();
+
 	this.database = firebase.database();
 	this.database.goOnline();
+	var tempCount = 0;
+	var dataObjRef = this.database.ref('user-count/' + this.auth.currentUser.uid);
+	dataObjRef.once('value').then(function(snapshot)
+	{
+		if (snapshot.val() === null)
+		{
+			console.log('make new data', fbEnter.auth.currentUser.uid);
+			fbEnter.database.ref('user-count/' + fbEnter.auth.currentUser.uid).set(
+				{
+					username: fbEnter.auth.currentUser.displayName,
+					count: 0
+				}
+			);
+		}
+		else
+		{
+			console.log('load data from database: ', snapshot.key);
+			tempCount = snapshot.child('count').val();
+		}
+	}).then(function()
+	{
+		EnterClicker.count = tempCount;
+		EnterClicker.isEnable = true;
+		EnterClicker.countToMessage();
+	});
+	
 	this.dvAuth.style.display = 'none';
 	this.dvLogOut.style.display = 'block';
 	document.getElementById('welcomeUser').innerHTML = '환영합니다, ' + this.auth.currentUser.displayName;
@@ -61,6 +90,8 @@ FirebaseEnter.prototype.setLogin = function()
 
 FirebaseEnter.prototype.setLogOut = function()
 {
+	EnterClicker.count = 0;
+	EnterClicker.countToMessage();
 	this.dvAuth.style.display = 'block';
 	this.dvLogOut.style.display = 'none';
 	document.getElementById('welcomeUser').innerHTML = '환영합니다.';
@@ -180,6 +211,15 @@ FirebaseEnter.prototype.signInWithPopup = function(provider)
 		alert('로그인에 실패하였습니다');
 		console.error('로그인 에러',error);
 	});
+}
+
+FirebaseEnter.prototype.syncCount = function(_count)
+{
+	if (this.auth.currentUser)
+	{
+		var currentDataRef = this.database.ref('user-count/' + this.auth.currentUser.uid);
+		return currentDataRef.update({count: _count});
+	}
 }
 
 document.addEventListener('DOMContentLoaded', function()
