@@ -58,23 +58,23 @@ FirebaseEnter.prototype.setLogin = function()
 	this.database = firebase.database();
 	this.database.goOnline();
 	var tempCount = 0;
-	var dataObjRef = this.database.ref('user-count/' + this.auth.currentUser.uid);
+	var dataObjRef = this.database.ref('/user-count/' + this.auth.currentUser.uid);
 	dataObjRef.once('value').then(function(snapshot)
 	{
-		if (snapshot.val() === null)
+		if (!snapshot.exists())
+		{
+			console.log('load data from database: ', snapshot.key);
+			tempCount = snapshot.child('count').val();
+		}
+		else
 		{
 			console.log('make new data', fbEnter.auth.currentUser.uid);
-			fbEnter.database.ref('user-count/' + fbEnter.auth.currentUser.uid).set(
+			fbEnter.database.ref('/user-count/' + fbEnter.auth.currentUser.uid).set(
 				{
 					username: fbEnter.auth.currentUser.displayName,
 					count: 0
 				}
 			);
-		}
-		else
-		{
-			console.log('load data from database: ', snapshot.key);
-			tempCount = snapshot.child('count').val();
 		}
 	}).then(function()
 	{
@@ -217,7 +217,7 @@ FirebaseEnter.prototype.syncCount = function(_count)
 {
 	if (this.auth.currentUser)
 	{
-		var currentDataRef = this.database.ref('user-count/' + this.auth.currentUser.uid);
+		var currentDataRef = this.database.ref('/user-count/' + this.auth.currentUser.uid);
 		return currentDataRef.update({count: _count});
 	}
 }
